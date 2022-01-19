@@ -1,0 +1,34 @@
+body {
+    display: flex;
+    
+}
+
+.outline {
+    margin: 80px auto;
+    width: 80rem;
+    height: 90rem;
+    background-color: #1e2ba3;
+    display: flex;
+    border-radius: 20px;
+    border: solid 25px #aa0c2c;
+    font-size: 5rem;
+    font-family: Lucida;
+    
+    color: white;
+    box-shadow: 8px 8px 10px grey ;
+}
+
+.container {
+    margin: 80px auto;
+    
+    display: flex;
+    flex-direction: row;
+}
+
+.gridbox {
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    border: solid 1px black;
+
+}
