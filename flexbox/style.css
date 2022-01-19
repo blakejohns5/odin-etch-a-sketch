@@ -1,0 +1,55 @@
+body {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+        
+}
+
+.console {
+    margin: 10rem auto;
+    padding: 40px 40px;
+    width: 75rem;
+    height: 80rem;
+    background-color: #ce405c;    
+    border-radius: 20px;
+    color: gold;
+    font-size: 6rem;
+    font-family: 'Lobster', cursive;
+    text-shadow: 3px 3px 10px #8a0822;
+    text-align: center;    
+    box-shadow: 8px 8px 10px grey ; 
+    border-bottom: solid 12px #8a0822;
+    border-left: solid 12px #8a0822;
+    display: flex;
+    flex-direction: column;
+}
+
+.grid-div {
+    margin: 50px auto;    
+    display: flex;
+}
+
+.gridbox {
+    min-height: 30px;
+    min-width: 30px;
+    background-color: white;
+    border: solid 1px black;
+
+}
+
+.color-black {
+    background-color: black;
+}
+
+.btn-control {
+    width: 200px;
+    height: 50px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 24px;
+    font-weight: 500;
+    font-family: sans-serif;
+    box-shadow: 2px 2px black;
+}
