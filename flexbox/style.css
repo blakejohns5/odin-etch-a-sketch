@@ -1,18 +1,14 @@
 body {
     display: flex;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-        
 }
 
-.console {
-    margin: 10rem auto;
+.gamebox {
+    margin: 5rem auto;
     padding: 40px 40px;
-    width: 75rem;
-    height: 80rem;
+    width: 85%;
+    height: 95rem;
     background-color: #ce405c;    
-    border-radius: 20px;
+    border-radius: 35px;
     color: gold;
     font-size: 6rem;
     font-family: 'Lobster', cursive;
@@ -25,27 +21,57 @@ body {
     flex-direction: column;
 }
 
+.outer {
+    width: 70%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    
+}
+
+.inner {
+    background-color: #202091;
+    
+}
+
 .grid-div {
     margin: 50px auto;    
     display: flex;
+    justify-content: center;
+   
 }
 
 .gridbox {
     min-height: 30px;
     min-width: 30px;
-    background-color: white;
-    border: solid 1px black;
+    background-color: #eeeeee;
+    border: solid 0.01em #4d4d4d;
+    opacity: 90%;
+    
 
 }
 
-.color-black {
-    background-color: black;
+
+.btn-div {      
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
 }
 
-.btn-control {
+.btn-row {
+    margin: 25px auto;    
+    display: flex;
+    gap: 80px;
+    
+}
+
+.btn {
     width: 200px;
-    height: 50px;
-    margin-top: 50px;
+    height: 60px;
     margin-left: auto;
     margin-right: auto;
     font-size: 24px;
