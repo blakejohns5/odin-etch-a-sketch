@@ -1,25 +1,31 @@
 
-let gameBox = document.createElement('div');
-gameBox.className = 'gamebox';
-gameBox.id = 'console-frame'
-gameBox.textContent = 'Sketch-O-Matic';
-document.body.append(gameBox);
+// Create buttons: black & white, random colors, nice colors.
+const bwBtn = document.createElement('button');
+bwBtn.textContent = 'B & W';
 
-let gridDivOuter = document.createElement('div');
-gridDivOuter.classList.add('grid-div', 'outer');
-gameBox.appendChild(gridDivOuter);
+const randomBtn = document.createElement('button');
+randomBtn.textContent = 'Random';
 
-// Declare cells, used in trackMouse() and clearGrid() functions
-const cells = document.querySelectorAll('.gridbox');
+const niceBtn = document.createElement('button');
+niceBtn.textContent = 'Nice';
 
+// Query .buttons bottom and append buttons.
+const btnsTop = document.querySelector('.top');
+btnsTop.appendChild(bwBtn);
+btnsTop.appendChild(randomBtn);
+btnsTop.appendChild(niceBtn);
 
+// Set colorMode, depending on button event listeners.
+let colorMode = '';
+let defaultSize = 25;
+// Create random hex color, color with lighter hue.
+let randomColor = Math.floor(Math.random() * 16777215).toString(16);
 let randomNiceColor = (() => {
-    // "use strict";
-  
+    "use strict";
     const randomInt = (min, max) => {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     };
-  
+
     return () => {
       var h = randomInt(0, 360);
       var s = randomInt(42, 98);
@@ -28,11 +34,9 @@ let randomNiceColor = (() => {
     };
 })();
 
-let colorMode = '';
-
-// Function to allow mouseover, with color black.
+// Enable mousover on grid, condition enables colorMode var to set colorMode.
 let paint = () => {
-    let cells = document.querySelectorAll('.gridbox');
+    let cells = document.querySelectorAll('.grid-cell');
     cells.forEach(cell => {
         cell.addEventListener('mouseover', () => {
             if (colorMode === 'random') {
@@ -46,143 +50,84 @@ let paint = () => {
     });
 };
 
-// Function to create hexadecimal color code.
-let randomColor = Math.floor(Math.random() * 16777215).toString(16);
-
-// Function to create grids, with width and height as
-const makeGrid = (width, height) => {
-    let gridDivInner = document.createElement('div');
-    gridDivInner.classList.add('grid-div', 'inner');
-    
-
-    for (let i = 0; i < width; i++) {
-        let row = document.createElement('div');
-        row.className = 'row';
-        row.id = 'row' + i;
-        gridDivInner.appendChild(row);
-
-        for (let j = 0; j < height; j++) {
-            let gridBox = document.createElement('div');
-            gridBox.className = 'gridbox';
-            gridBox.id = 'box' + i + '-' + j;
-            row.appendChild(gridBox);
-        };                
+// Make grid based on equal width and height entered into range slider, default 20px.
+const makeGrid = (size) => {
+    let gridBox = document.querySelector('.grid-box');  
+    let densityDisplay = document.querySelector('.left');
+    gridBox.innerHTML = null;
+    gridBox.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+    gridBox.style.gridTemplateRows = `repeat(${size}, 1fr)`; 
+          
+    for (let i = 0; i < size * size; i++) {
+        let gridCell = document.createElement('div');
+        gridCell.classList.add('grid-cell');
+        gridBox.appendChild(gridCell);
     }; 
-    gridDivOuter.appendChild(gridDivInner); 
+    densityDisplay.innerHTML = `<p>Density:&emsp;${size}</p>`;
     paint(); 
-     
 };
 
-//Load defaults 16x16 grid on start
-window.onload = makeGrid(16, 16);
+// Get value from range slider input for grid size
+document.querySelector('input').value = defaultSize;
+let slider = document.querySelector('input');
+slider.addEventListener('change', () => {
+    let sliderInput = document.querySelector('input').value;    
+    makeGrid(sliderInput);
+});
+
+// Clear button to start with fresh grid.
+const clearBtn = document.createElement('button');
+clearBtn.textContent = 'Clear';
+// Query .buttons bottom and append buttons.
+const btnsBtm = document.querySelector('.bottom');
+btnsBtm.appendChild(clearBtn);
 
 // Function to clear grid by removing class that sets background color.
 const clearGrid = () => {
-    let cells = document.querySelectorAll('.gridbox');
+    let cells = document.querySelectorAll('.grid-cell');
     cells.forEach(cell => {
         cell.setAttribute('style', 'background-color: #eeeee');
     });
 };
 
-// Function removes grid, used before replacing with different grid.
-const removeGrid = () => {
-    let outerGrid = document.querySelector('.outer');
-    let innerGrid = document.querySelector('.inner');
-    outerGrid.removeChild(innerGrid);
-}
+// Function to clear button style 
+const clearButtons = () => {
+    let btns = document.querySelectorAll('button');
+    btns.forEach(btn => {
+        btn.classList.remove('active');
+    })
+};
 
-// Create button section at the button of console.
-const btnDiv = document.createElement('div');
-btnDiv.classList.add('btn-div');
-gameBox.appendChild(btnDiv);
-
-// Top buttons
-const btnsTop = document.createElement('div');
-btnsTop.classList.add('btn-row')
-btnDiv.appendChild(btnsTop);
-
-// Buttons inside top buttons div
-const basicBtn = document.createElement('button');
-basicBtn.textContent = 'Basic';
-basicBtn.classList.add('btn');
-btnsTop.appendChild(basicBtn);
-
-
-// Creates portrait-style grid
-const portraitBtn = document.createElement('button');
-portraitBtn.textContent = 'Portrait';
-portraitBtn.classList.add('btn');
-btnsTop.appendChild(portraitBtn);
-
-// Creates landscape style grid
-const landscapeBtn = document.createElement('button');
-landscapeBtn.textContent = 'Landscape';
-landscapeBtn.classList.add('btn');
-btnsTop.appendChild(landscapeBtn);
-
-// Bottom buttons
-const btnsBtm = document.createElement('div');
-btnsBtm.classList.add('btn-row');
-btnDiv.appendChild(btnsBtm);
-
-// Color mode button / b&w
-const bwBtn = document.createElement('button');
-bwBtn.textContent = 'B & W';
-bwBtn.classList.add('btn');
-btnsBtm.appendChild(bwBtn);
-
-const randomBtn = document.createElement('button');
-randomBtn.textContent = 'Random';
-randomBtn.classList.add('btn');
-btnsBtm.appendChild(randomBtn);
-
-const niceBtn = document.createElement('button');
-niceBtn.textContent = 'Nice';
-niceBtn.classList.add('btn');
-btnsBtm.appendChild(niceBtn);
-
-// Clear button to start with fresh grid.
-const clearBtn = document.createElement('button');
-clearBtn.textContent = 'Clear';
-clearBtn.classList.add('btn');
-btnsBtm.appendChild(clearBtn);
-
-// Event Listeners for buttons
-basicBtn.addEventListener('click', () => {
-    removeGrid();
-    makeGrid(16, 16);
-});
-
-// Event listeners for buttons on bottom
-portraitBtn.addEventListener('click', () => {
-    removeGrid();
-    makeGrid(26, 30);
-});
-
-landscapeBtn.addEventListener('click', () => {
-    removeGrid();
-    makeGrid(32, 26);
-});
 
 bwBtn.addEventListener('click', () => {   
+    bwBtn.classList.add('active');
+    randomBtn.classList.remove('active');
+    niceBtn.classList.remove('active');
     colorMode = 'bw';
     paint();
 });
 
-randomBtn.addEventListener('click', () => {    
+randomBtn.addEventListener('click', () => {  
+    randomBtn.classList.add('active');
+    bwBtn.classList.remove('active');
+    niceBtn.classList.remove('active');  
     colorMode = 'random'
     paint();
 });
 
-niceBtn.addEventListener('click', () => {    
+niceBtn.addEventListener('click', () => {   
+    niceBtn.classList.add('active');
+    bwBtn.classList.remove('active');
+    randomBtn.classList.remove('active');
     colorMode = 'nice'
     paint();
 });
 
-
 clearBtn.addEventListener('click', () => {
     clearGrid();
+    clearButtons();
 });
 
-
+//Load defaults 25x25 grid on start
+window.onload = makeGrid(defaultSize);
 
